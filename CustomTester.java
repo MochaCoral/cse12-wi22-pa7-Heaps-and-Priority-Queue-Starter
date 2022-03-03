@@ -12,6 +12,9 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * TODO: Add your class header
  * 
@@ -22,10 +25,23 @@ import static org.junit.Assert.*;
 public class CustomTester {
     
     boolean exceptionThrown;
+    MyMinHeap<Integer> minHeapNuclear;
+    
+
+    /**
+     * Helper method to initialize all instance variables of MyDeque
+     * 
+     * @param meanHeap The heap to initialize
+     * @param data     The data array
+     */
+    static void initMinHeap(MyMinHeap<Integer> heap, ArrayList<Integer> data) {
+        heap.data = new ArrayList<>(data);
+    }
 
     @Before
     public void setup() {
         boolean exceptionThrown = false;
+        minHeapNuclear = new MyMinHeap<Integer>();
     }
 
     /**
@@ -47,7 +63,9 @@ public class CustomTester {
      */
     @Test
     public void testGetMinChildIdx() {
-        assertEquals("", 1, 1);
+        ArrayList<Integer> minChildTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {2, 4, 5}));
+        initMinHeap(minHeapNuclear, minChildTest);
+        assertEquals("Index 1 should be the min child", 1, minHeapNuclear.getMinChildIdx(0));
     }
 
     /**
@@ -55,27 +73,38 @@ public class CustomTester {
      */
     @Test
     public void testPercolateUp() {
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> percolateUpTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {1, 3, 2, 0}));
+        initMinHeap(minHeapNuclear, percolateUpTest);
+        minHeapNuclear.percolateUp(4);
+        assertEquals("last element should have been percolated up to root", 0, minHeapNuclear.getMin());
     }
 
     /**
-     * Test the percolateDown method when [TODO]
+     * Test the percolateDown method when percolating an internal node
      */
     @Test
     public void testPercolateDown() {
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> percolateDownTest = new ArrayList<Integer>(Arrays.asList(new Integer[] { 1, 5, 2, 4, 3, 6, 7}));
+        initMinHeap(minHeapNuclear, percolateDownTest);
+        minHeapNuclear.percolateDown(2);
+        assertEquals("node at index 2 should have swapped with index 4", 3, minHeapNuclear.data.get(1));
+        assertEquals("node at index 4 should have swapped with index 2", 5, minHeapNuclear.data.get(4));
+
     }
 
     /**
-     * Test the deleteIndex method when [TODO]
+     * Test the deleteIndex method when deleting an internal node
      */
     @Test
     public void testDeleteIndex() {
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> deleteIdxTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {1, 2, 3, 4, 5, 6, 7}));
+        initMinHeap(minHeapNuclear, deleteIdxTest);
+        minHeapNuclear.deleteIndex(2);
+        assertEquals("child node should have percolated up", 4, minHeapNuclear.data.get(2));
     }
 
     /**
-     * Test the deleteIndex method when [TODO]
+     * Test the deleteIndex method when deleting a leaf node
      */
     @Test
     public void testDeleteIndex2() {
@@ -87,7 +116,15 @@ public class CustomTester {
      */
     @Test
     public void testInsert(){
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> insertTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {1, 2, 3}));
+        initMinHeap(minHeapNuclear, insertTest);
+        try {
+            minHeapNuclear.insert(null);
+        }
+        catch(NullPointerException e) {
+            exceptionThrown = true;
+        }
+        assertTrue("insertion should have thrown NullPointerException", exceptionThrown);
     }
 
     /**
@@ -100,11 +137,13 @@ public class CustomTester {
 
    
     /**
-     * Test remove when [TODO]
+     * Test remove when min heap is empty
      */
     @Test
     public void testRemove(){
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> removeTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {}));
+        initMinHeap(minHeapNuclear, removeTest);
+        assertEquals("remove should return null", null, minHeapNuclear.remove());
     }
 
   
@@ -113,6 +152,8 @@ public class CustomTester {
      */
     @Test
     public void testGetMin(){
-        assertFalse(exceptionThrown);
+        ArrayList<Integer> getMinTest = new ArrayList<Integer>(Arrays.asList(new Integer[] {1, 2, 3, 4, 5}));
+        initMinHeap(minHeapNuclear, getMinTest);
+        assertFalse("min should be 1", 1, minHeapNuclear.getMin());
     }
 }

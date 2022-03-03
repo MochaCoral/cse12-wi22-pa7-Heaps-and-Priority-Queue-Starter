@@ -130,6 +130,7 @@ public class MyMinHeap<E extends Comparable<E>> implements MinHeapInterface <E>{
             this.swap(index, this.data.size() - 1);
             val = this.data.remove(this.data.size() - 1);
             this.percolateDown(index);
+            this.percolateUp(index);
             return val;
         }
     }
