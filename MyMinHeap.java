@@ -24,8 +24,15 @@ public class MyMinHeap<E extends Comparable<E>> implements MinHeapInterface <E>{
         this.data = new ArrayList<E>();
     }
 
-    public MyMinHeap(Collection<? extends E> collection) {
+    public MyMinHeap(Collection<? extends E> collection) throws NullPointerException{
+        if(collection == null || collection.contains(null)) {
+            throw new NullPointerException();
+        }
         this.data = new ArrayList<E>(collection);
+        for(int i = this.data.size() - 1; i >= 0; i--) {
+            this.percolateDown(i);
+        }
+
     }
 
     protected void swap(int from, int to) {
@@ -95,7 +102,7 @@ public class MyMinHeap<E extends Comparable<E>> implements MinHeapInterface <E>{
             minVal = val;
             minIdx = -1;
 
-            for(int i = 0; i < 2 && i + childIdx < this.data.size(); i++) {
+            for(int i = 0; i < 2 && i + childIdx < this.size(); i++) {
                 if(this.data.get(i + childIdx).compareTo(minVal) < 0) {
                     minVal = this.data.get(i + childIdx);
                     minIdx = i + childIdx;

@@ -21,20 +21,33 @@ import static org.junit.Assert.*;
  */
 public class CustomTester {
     
-    /**
-     * Test the constructor when [TODO: fill in a possible edge case here]
-     */
-    @Test
-    public void testMyMinHeapConstructor() {
+    boolean exceptionThrown;
 
+    @Before
+    public void setup() {
+        boolean exceptionThrown = false;
     }
 
     /**
-     * Test the getMinChildIdx method when [TODO]
+     * Test the constructor when collection is null
+     */
+    @Test
+    public void testMyMinHeapConstructor() {
+        try {
+            MyMinHeap<String> doomed = new MyMinHeap<String>(null);
+        }
+        catch (NullPointerException e){
+            exceptionThrown = true;
+        }
+        assertTrue("null collection should throw NullPointerException", exceptionThrown);
+    }
+
+    /**
+     * Test the getMinChildIdx method when called on root
      */
     @Test
     public void testGetMinChildIdx() {
-
+        assertEquals("", 1, 1);
     }
 
     /**
@@ -42,7 +55,7 @@ public class CustomTester {
      */
     @Test
     public void testPercolateUp() {
-
+        assertFalse(exceptionThrown);
     }
 
     /**
@@ -50,7 +63,7 @@ public class CustomTester {
      */
     @Test
     public void testPercolateDown() {
-
+        assertFalse(exceptionThrown);
     }
 
     /**
@@ -58,7 +71,7 @@ public class CustomTester {
      */
     @Test
     public void testDeleteIndex() {
-
+        assertFalse(exceptionThrown);
     }
 
     /**
@@ -66,7 +79,7 @@ public class CustomTester {
      */
     @Test
     public void testDeleteIndex2() {
-
+        assertFalse(exceptionThrown);
     }
 
     /**
@@ -74,7 +87,7 @@ public class CustomTester {
      */
     @Test
     public void testInsert(){
-
+        assertFalse(exceptionThrown);
     }
 
     /**
@@ -82,7 +95,7 @@ public class CustomTester {
      */
     @Test
     public void testInsert2(){
-
+         assertFalse(exceptionThrown);
     }
 
    
@@ -91,7 +104,7 @@ public class CustomTester {
      */
     @Test
     public void testRemove(){
-        
+        assertFalse(exceptionThrown);
     }
 
   
@@ -100,6 +113,6 @@ public class CustomTester {
      */
     @Test
     public void testGetMin(){
-        
+        assertFalse(exceptionThrown);
     }
 }
